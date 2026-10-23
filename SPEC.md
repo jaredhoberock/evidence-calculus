@@ -263,7 +263,8 @@ type variable outside a template and an undischarged application claim or projec
 and no verdict (a claim erases; a value forwards, the entry having left its endpoints one type); what instantiation still owes (the
 pending predicate and instantiation's exit walk) and what erasure judges are verdicts on one enumeration of standing sites
 (`walkStandingSites`), which reads the types an op's attributes carry and a bodied function's declared result types (a function that
-never returns hands back no value of them) as well as its results and block arguments, and whose one exemption is the application claim
+never returns hands back no value of them, so selection proves them, as it proves an external function's) as well as its results and
+block arguments, and whose one exemption is the application claim
 of a coerce read through; erasure's entry refuses first, at the op owing it, any work instantiation still owes, then reads every proven
 claim's application as selection reads one before it proves it (`readApplication`), refusing an argument that resolves to no type a
 predicate states; and erasure's readiness is one rule, reading the predicate erasure's own conversion target reads, with
@@ -286,8 +287,9 @@ reading"; the stage reads premises off the derive, so the reason fails.
 `trait.allege` (`D/TraitOps.td:897`) and `trait.derive` (`:961`) become unproven claims, and `ProjectOp` refuses a cited result at a trait
 requirement (`D/TraitOps.cpp:3156-3166`) (F1). (b) A proof citing itself, or a ring of proofs, through a where entry: `verifyProofDerivationsEnd`
 refuses a repeat on its chain instead of counting it zero (`D/Passes.cpp:293-373`) (F2). (c) A claim type inside an equality endpoint:
-`ClaimType::verifySymbolUses` refuses any claim there wherever the equality stands, as `TraitApplicationAttr::verifySymbolUses` refuses
-a claim argument (`D/TraitTypes.cpp`) (F10). (d) A derive or projection feeding itself in a graph region: `DeriveOp` and
+every evidence op refuses evidence of such an equality among what it reads and produces (`EqualitiesRelateTypes`), and
+`ClaimType::verifySymbolUses` wherever an equality naming a symbol stands, as `TraitApplicationAttr::verifySymbolUses` refuses a claim
+argument (`D/TraitTypes.cpp`); erasure's entry refuses one still standing anywhere else (F10). (d) A derive or projection feeding itself in a graph region: `DeriveOp` and
 `ProjectOp` take the SSA-dominance check `WitnessOp` and `CoerceOp` have (`D/TraitOps.cpp:2353-2360`, `:2616-2619`) (F12).
 
 **Kept, with the overlap named.** `trait.witness @I for hdr_I` with `I` unconditional is `trait.derive hdr_I from @I given()` plus a
@@ -306,7 +308,8 @@ rebuilt over position placeholders with its immediate sub-types as children (`D/
 kind-constraining wrapper around a variable is a variable occurrence, atomic (`D/EqualityVerification.cpp:59-67`); a constructor declining
 placeholders is atomic too (`:77-95`; F9). `t[s]`: `a_i` becomes `s_i` when `i < |s|` and stays otherwise, one pass, a substituted term
 never revisited (`D/TraitTypes.hpp:824-831`; `#trait.impl_args`, `D/TraitAttributes.td:132-174`). H1: no claim type inside an equality
-endpoint, which `ClaimType::verifySymbolUses` enforces where an equality stands and selection where its sides resolve (`D/TraitTypes.cpp`,
+endpoint, which every evidence op enforces on the evidence it reads and produces, `ClaimType::verifySymbolUses` where an equality
+naming a symbol stands, and selection and erasure's entry where its sides resolve (`D/TraitOps.cpp`, `D/TraitTypes.cpp`,
 `D/ImplResolution.cpp`; F10).
 Predicates `P ::= T[t] | t1 = t2`: an application names an existing trait at its arity with no claim among its arguments
 (`D/TraitAttributes.cpp:126-156`; `T/invalid_claim_as_a_type_argument.mlir`, `X/x7`); an equality is ordered as written and read
@@ -490,11 +493,14 @@ template, `D/Passes.cpp:889-946`) are stage facts, not rules (F16).
 
 Standing hypotheses, each with the program showing the verifier does not enforce it:
 - H1 (grammar): no claim type inside an equality endpoint, in `S`, `G` or a cited equality (`V/v2`, `X/x6`; F10). The tree enforces
-  it for every equality it states and every predicate it proves: `ClaimType::verifySymbolUses` refuses one standing in a program, as
-  written or as a clone's substitution wrote it (`T/invalid_claim_inside_an_equality_endpoint.mlir`,
-  `T/invalid_equality_a_substitution_states_over_evidence_is_refused.mlir`), and selection refuses a predicate whose normal form reaches
-  one (`T/invalid_equality_side_resolving_to_evidence_is_refused.mlir`, `T/invalid_application_whose_argument_resolves_to_evidence_is_refused.mlir`).
-  It does not hold of bindings: the model covers the fragment in which no associated type is bound to a claim-carrying type (F10).
+  it for every equality it states and every predicate it proves: every evidence op refuses evidence of such an equality among
+  what it reads and produces, as written or as a clone's substitution wrote it (`EqualitiesRelateTypes`;
+  `T/invalid_equality_over_evidence_naming_no_symbol.mlir`, `T/invalid_equality_a_substitution_states_over_evidence_is_refused.mlir`),
+  the claim's symbol-use verifier one naming a symbol wherever it stands (`T/invalid_claim_inside_an_equality_endpoint.mlir`),
+  erasure's entry one still standing anywhere, and selection a predicate whose normal form reaches one
+  (`T/invalid_equality_side_resolving_to_evidence_is_refused.mlir`, `T/invalid_application_whose_argument_resolves_to_evidence_is_refused.mlir`).
+  It does not hold of bindings or substitutions: the model covers the fragment in which no associated type is bound to a claim-carrying
+  type and no type parameter is instantiated at one (F10).
 - H2 (proof table): every `trait.proof` body is typed under `G = []` at the application it proves, ground, allege-free, and "p cites q"
   is well founded (`R/p14`; F2).
 - H3 (ReqDuty, 4.3): every impl's plain and binder requirements are derivable in the primitive fragment from its where entries
@@ -638,8 +644,10 @@ recurses on them, `Valid` is their inhabitation; `HasType` takes `G` as an index
 dialect's plain list, binders apart; GAT labels are declared, not positional; the constructor law carries its axioms; selection is an
 oracle `sel` whose soundness is a hypothesis, so `denote`, `ServedBy` and `Coherent` do not define one another; `Ok` restricts derivations
 to denotable citations where theorems 5 and 7 need it; `Ty` has no claim constructor (H1). The model's grammar covers the types
-predicates mention, so it covers the fragment in which no associated type is bound to a claim-carrying type. The tree admits that
-binding for the tuple dialect's `Claims`, and selection refuses every predicate whose normal form reaches a claim (`isNoPredicateType`,
+predicates mention, and its substitutions are `Var -> Option Ty` (`Defs.lean`), so it covers the fragment in which no associated type is
+bound to a claim-carrying type and no type parameter is instantiated at one. The tree admits both, the binding for the tuple dialect's
+`Claims` and the instantiation where a generic function's parameter takes evidence
+(`T/equality_a_substitution_states_over_evidence_unused_is_collected.mlir`), and selection refuses every predicate whose normal form reaches a claim (`isNoPredicateType`,
 read by `readApplication`, `readEqualitySides` and a projection's associated-type arguments), so every predicate the tree proves lies in
 the model's fragment (F10). The binder constructor (REQ-CALL) and the (REQ-A) rule are elided here and added in phase B by the pattern
 of `derive`.
@@ -972,27 +980,45 @@ type is atomic to `GC` and a coerce needing it is refused (`D/EqualityVerificati
 **F10 (medium; semantics; representation fix; landed).** An equality endpoint could be an unproven claim type, so a hypothesis
 `claim<P> = claim<P'>` would let `trait.coerce` convert evidence of `P` into evidence of `P'` with no equality between their arguments,
 and `claim<P> = i64` would turn evidence into a value (`V/v2`, `X/x6`, `Q/p11`, `Q/p03c`). Erasure's entry had already refused both
-shapes by judgment ("does not settle before erasure"). Landed: `ClaimType::verifySymbolUses` refuses any claim inside an endpoint
-wherever an equality stands, as an application refuses a claim argument (`T/invalid_claim_inside_an_equality_endpoint.mlir`). The
-rule was first an invariant of the attribute (`TypeEqualityAttr::verify`, 362cf96), which a clone's substitution and selection's normal
-forms rebuild and cannot fail: an instance substituting evidence into a template's equality, and a respelling equality over an argument
-a binding resolves to evidence, aborted the compiler there. Now the attribute is built whatever its endpoints, and a substituted one
-standing in a program is refused by the verifier after the step that wrote it
+shapes by judgment ("does not settle before erasure"). Landed: the rule `verifyEndpointsRelateTypes` refuses a claim inside an
+endpoint, as an application refuses a claim argument, and every evidence op (allege, derive, project, witness, coerce) asks it of the evidence it reads and produces
+(`EqualitiesRelateTypes`, an op verifier, which every verification runs), so no coerce cites such an equality
+(`T/invalid_equality_over_evidence_naming_no_symbol.mlir`); the claim's symbol-use verifier asks it wherever an equality naming a symbol
+stands (`T/invalid_claim_inside_an_equality_endpoint.mlir`), and erasure's entry judges one standing anywhere else, an inert signature
+over builtin types, which the symbol-use walk does not reach. The rule was first an invariant of the attribute (`TypeEqualityAttr::verify`,
+362cf96), which a clone's substitution and selection's normal forms rebuild and cannot fail: an instance substituting evidence into a
+template's equality, and a respelling equality over an argument a binding resolves to evidence, aborted the compiler there. It then
+lived in the symbol-use verifier alone (3a1498d), which never sees a type naming no symbol, so a hypothesis over builtin evidence let two
+coerces turn an i32 into an i64 at verification. Now the attribute is built whatever its endpoints, and a substituted one an op reads or
+produces is refused by the verifier after the step that wrote it
 (`T/invalid_equality_a_substitution_states_over_evidence_is_refused.mlir`). An impl may still bind an associated type to a type
 carrying claims -- the tuple dialect's mappers bind their `Claims` so, and Screech programs reach them -- and selection refuses every
 predicate whose normal form reaches one, by one rule (`isNoPredicateType`): an application's arguments (`readApplication`, which
 `resolveImplFor` reads before it selects and erasure's entry reads for a proof cited by hand), a projection's associated-type
-arguments, and an equality's sides (`readEqualitySides`, which judges an impl's equality premise at selection too, after the impl's
-own bindings), so no proof is written over such a predicate, no impl is a candidate through such a premise, and no resolution step
+arguments, and an equality's sides (`readEqualitySides`, which judges an impl's equality premise at selection too, as the proof citing the impl
+reads it: every projection's associated-type arguments are judged before a binding is substituted for it, and a premise projecting
+through the application being selected meets that selection again and refuses the impl, rustc's E0275), so no proof is written over
+such a predicate, no impl is a candidate through such a premise
+(`T/invalid_hypothesis_resting_on_an_impl_premise_through_its_own_application.mlir`,
+`T/impl_premise_through_its_own_application_leaves_the_other_candidate.mlir`), and no resolution step
 states an equality relating a claim (`T/invalid_equality_side_resolving_to_evidence_is_refused.mlir`,
 `T/invalid_application_whose_argument_resolves_to_evidence_is_refused.mlir`). So H1 holds of every equality the tree states and every
-predicate it proves, and not of bindings: the Lean model covers the fragment in which no associated type is bound to a claim-carrying
-type, the tree admits that binding for the tuple dialect, and equalities over claims are refused everywhere, as written and as
-resolved. Two end states are consistent, and the choice between them is a decision for after the Lean phase. In GHC's and Rust's, a
+predicate it proves, and not of bindings or substitutions: the Lean model covers the fragment in which no associated type is bound to a
+claim-carrying type and no type parameter is instantiated at one, the tree admits both, and an equality over claims is refused by every
+evidence op reading or producing it, wherever it names a symbol, wherever a side resolves to one, and at erasure's entry wherever it stands.
+Three end states are consistent, and the choice among them is a decision after the Lean phase. In GHC's and Rust's, a
 type carrying evidence (`Dict c`, `dyn Trait`) is an ordinary type everywhere, predicates may mention it, and the one soundness law is
 the judgment at erasure's entry; the as-written and as-resolved refusals go and the model's `Ty` gains a claim constructor. In the
 model's, no claim stands inside any type a predicate or a binding states, at the cost of re-representing the tuple dialect's `Claims`
-(refusing such a binding failed 59 codegen rows and 7 rows each of the tuple and coord dialects). The capability the two deleted rows `T/generic_function_parameter_spelled_as_a_projection_takes_its_callers_proof.mlir`
+(refusing such a binding failed 59 codegen rows and 7 rows each of the tuple and coord dialects). The third, the candidate, is the
+shape GHC gives an associated type family whose results are constraints: an associated type declares its kind (`Constraint` against
+`Type`). `trait.assoc_type` gains a kind, type or evidence, which the three symbol-use verifiers read off the declaration they already
+look up, so an application argument, a GAT argument and an equality endpoint of evidence kind are refused as written; a binding whose
+kind disagrees with its declaration is refused at the impl, and a type variable, of type kind, instantiated at evidence is refused at
+the call. The tuple dialect's `Claims` is declared evidence-kinded and kept, and the evidence half of `isNoPredicateType`, the three
+containment checks (an application's arguments, a projection's, an equality's endpoints) and the evidence ops' trait judging
+equalities are deleted. The Lean `Ty` stays as it is while `TraitDecl.assocs` gains a kind and `ImplDecl.bindings` splits by it, which is why it
+follows phase B. The capability the two deleted rows `T/generic_function_parameter_spelled_as_a_projection_takes_its_callers_proof.mlir`
 and `T/method_parameter_spelled_as_a_projection_takes_its_callers_proof.mlir` exercised -- a formal spelled as a projection that
 resolves to a claim, coerced into evidence through a requirement `@Wrap[T]::Item = claim<@Mark[T]>` -- is one no Screech construct
 reaches: no Screech type lowers to a claim, and the frontend writes no equality over one.
