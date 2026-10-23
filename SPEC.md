@@ -1012,12 +1012,16 @@ the judgment at erasure's entry; the as-written and as-resolved refusals go and 
 model's, no claim stands inside any type a predicate or a binding states, at the cost of re-representing the tuple dialect's `Claims`
 (refusing such a binding failed 59 codegen rows and 7 rows each of the tuple and coord dialects). The third, the candidate, is the
 shape GHC gives an associated type family whose results are constraints: an associated type declares its kind (`Constraint` against
-`Type`). `trait.assoc_type` gains a kind, type or evidence, which the three symbol-use verifiers read off the declaration they already
-look up, so an application argument, a GAT argument and an equality endpoint of evidence kind are refused as written; a binding whose
-kind disagrees with its declaration is refused at the impl, and a type variable, of type kind, instantiated at evidence is refused at
-the call. The tuple dialect's `Claims` is declared evidence-kinded and kept, and the evidence half of `isNoPredicateType`, the three
-containment checks (an application's arguments, a projection's, an equality's endpoints) and the evidence ops' trait judging
-equalities are deleted. The Lean `Ty` stays as it is while `TraitDecl.assocs` gains a kind and `ImplDecl.bindings` splits by it, which is why it
+`Type`). `trait.assoc_type` gains a kind, type or evidence. A binding whose kind disagrees with its declaration is refused at the impl, a
+type variable, of type kind, instantiated at evidence is refused at the call, and a projection's kind is its declaration's, so every
+rewrite that builds an equality, an application or a projection is kind-preserving. An equality endpoint, an application argument or a
+GAT argument of evidence kind is then refused where the term is made, by `TypeEqualityAttr::verify` and the application's and
+projection's constructors, total at parse through `getChecked`; an assertion there on a rewritten term is a compiler bug, as upstream
+treats an invalid `MemRefType::get`. The symbol-use verifiers cannot be those enforcers: the symbol-use walk never visits a type that
+names no symbol (the fork's `SymbolTable.cpp:495`; the interface's own contract, `SymbolInterfaces.td:261-267`), which is the hole the
+op trait of fe31e33 closed in the meantime. The tuple dialect's `Claims` is declared evidence-kinded and kept, and the evidence half of
+`isNoPredicateType`, the symbol-use arm of the endpoint rule, the three containment checks (an application's arguments, a
+projection's, an equality's endpoints) and the evidence ops' trait judging equalities are deleted. The Lean `Ty` stays as it is while `TraitDecl.assocs` gains a kind and `ImplDecl.bindings` splits by it, which is why it
 follows phase B. The capability the two deleted rows `T/generic_function_parameter_spelled_as_a_projection_takes_its_callers_proof.mlir`
 and `T/method_parameter_spelled_as_a_projection_takes_its_callers_proof.mlir` exercised -- a formal spelled as a projection that
 resolves to a claim, coerced into evidence through a requirement `@Wrap[T]::Item = claim<@Mark[T]>` -- is one no Screech construct
