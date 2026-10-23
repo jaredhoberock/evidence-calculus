@@ -1,3 +1,5 @@
+(This report was written on 2026-10-23 when the project lived under mlir-trait-dialect's working tree as `proofs/`; the files are now the ones beside it in this repository, and its SPEC.md is `SPEC.md` here.)
+
 # PHASE_B_REPORT.md: the Lean 4 proofs of the evidence calculus
 
 Written 2026-10-23, about 05:50 Central, from the files at
